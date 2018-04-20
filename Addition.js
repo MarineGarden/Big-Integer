@@ -1,9 +1,9 @@
 function addTwoIntegers(a, b) {
-	
+
 	var sectionLength = 2;
 	var excess = false;
 	return add(a, b);
-	
+
 	function add(a, b) {
 
 		var longerLength = Math.max(a.length, b.length);
@@ -20,14 +20,36 @@ function addTwoIntegers(a, b) {
 		return anyNumber.split("").reverse().join("");
 
 	}
-	function iterate(a, b) {
 
-		return a.length > sectionLength ? iterate(removeEnd(a, sectionLength),
-				removeEnd(b, sectionLength))
-				+ answer(keepEnd(a, sectionLength), keepEnd(b, sectionLength))
-				: answer(keepEnd(a, sectionLength), keepEnd(b, sectionLength));
+	function iterateAddition(a, b) {
+
+		var answer = "";
+		iterate(compareLength(a), separateAndCalculate(a, b));
+		return answer;
+
+		function compareLength(a) {
+
+			return a.length > sectionLength;
+
+		}
+		function separateAndCalculate(a, b) {
+
+			answer += answer(keepEnd(a, sectionLength), keepEnd(b, sectionLength));
+			removeEnd(a, sectionLength);
+			removeEnd(b, sectionLength);
+
+		}
 
 	}
+
+	function iterate(condition, iteration) {
+
+		while (condition.apply(this, argsArray)) {
+			iteration.apply(this, argsArray);
+		}
+
+	}
+
 	function removeEnd(message, endLength) {
 		return message.substr(0, message.length - endLength);
 	}
@@ -44,7 +66,6 @@ function addTwoIntegers(a, b) {
 
 	}
 	function format(anyNumber, wantedLength) {
-		return "0".repeat(wantedLength - anyNumber.length)
-				+ /[1-9]\d*|0$/.exec(anyNumber);
+		return "0".repeat(wantedLength - anyNumber.length) + /[1-9]\d*|0$/.exec(anyNumber);
 	}
 }
